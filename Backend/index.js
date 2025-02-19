@@ -19,5 +19,10 @@ app.listen(5050, ()=>{
     console.log("Listening at PORT 5050!");
 })
 db_connection();
+
+app.get('/', (req, res)=>{
+   res.send("Hi, User!");
+})
+
 // Routes
 app.use('/users', userRoutes);
