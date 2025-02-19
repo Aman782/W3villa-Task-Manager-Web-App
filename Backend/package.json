@@ -7,7 +7,6 @@
   "scripts": {
     "start": "node index.js"
   },
-  
   "author": "\"AMAN PANDEY\"",
   "license": "ISC",
   "dependencies": {
