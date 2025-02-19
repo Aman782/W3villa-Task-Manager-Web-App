@@ -109,9 +109,6 @@ Thoroughly tested all functionalities, ensuring they work as expected and handle
 - Add **due dates & reminders**
 - Implement **role-based access control (RBAC)** for admin users
 
-## License
-This project is open-source and available under the **MIT License**.
-
 ---
 ### Author
 Developed by [AMAN PANDEY]((https://github.com/Aman782/)) 🚀
