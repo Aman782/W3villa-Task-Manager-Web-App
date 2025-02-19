@@ -35,8 +35,16 @@ export const loginUser = async (req, res) => {
     user.refreshToken = refreshToken;
     await user.save();
 
-    res.cookie('accessToken', accessToken, { httpOnly: true });
-    res.cookie('refreshToken', refreshToken, { httpOnly: true });
+    res.cookie('accessToken', accessToken, {{
+      httpOnly: true, // ✅ Prevents client-side access
+      secure: true, // ✅ Ensures it works only on HTTPS
+      sameSite: "None", // ✅ Required for cross-site cookies
+  });
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true, // ✅ Prevents client-side access
+      secure: true, // ✅ Ensures it works only on HTTPS
+      sameSite: "None", // ✅ Required for cross-site cookies
+  });
 
     res.status(200).json({ message: 'Login successful', accessToken });
   } catch (error) {
