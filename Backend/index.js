@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "https://w3villa-task-manager-web-app-x945.vercel.app/", credentials: true }));
 app.listen(5050, ()=>{
     console.log("Listening at PORT 5050!");
 })

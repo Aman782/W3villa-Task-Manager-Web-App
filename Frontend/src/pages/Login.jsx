@@ -17,7 +17,7 @@ const Login = () => {
     }
 
     try{
-      const res = axios.post("http://localhost:5050/users/login", data, {withCredentials: true});
+      const res = axios.post("https://w3villa-task-manager-web-app-x945.vercel.app/users/login", data, {withCredentials: true});
       alert("User LoggedIn Successfully!");
       // setLoggedIn(true);
       navigate("/dashboard");

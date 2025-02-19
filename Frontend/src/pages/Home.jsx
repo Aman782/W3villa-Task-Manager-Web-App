@@ -11,7 +11,7 @@ const Home = () => {
   // Logout function
   const handleOnClick = async () => {
     try {
-      await axios.post("http://localhost:5050/users/logout", {}, { withCredentials: true });
+      await axios.post("https://w3villa-task-manager-web-app-x945.vercel.app/users/logout", {}, { withCredentials: true });
       setLoggedIn(false);
       navigate("/login");
     } catch (e) {
@@ -21,7 +21,7 @@ const Home = () => {
 
   const handleDashboardClick = async ()=>{
       try {
-        const res = await axios.get('http://localhost:5050/users/user-info', {withCredentials: true});
+        const res = await axios.get('https://w3villa-task-manager-web-app-x945.vercel.app/users/user-info', {withCredentials: true});
   
         if(res.status === 200){
           setLoggedIn(true);

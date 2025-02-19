@@ -15,7 +15,7 @@ const TaskForm = ({ open, handleClose }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get("http://localhost:5050/users/user-info", {
+        const res = await axios.get("https://w3villa-task-manager-web-app-x945.vercel.app/users/user-info", {
           withCredentials: true,
         });
 
@@ -50,7 +50,7 @@ const TaskForm = ({ open, handleClose }) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5050/users/new-task",
+        "https://w3villa-task-manager-web-app-x945.vercel.app/users/new-task",
         task,
         { withCredentials: true }
       );

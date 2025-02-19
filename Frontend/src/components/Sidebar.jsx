@@ -8,7 +8,7 @@ const Sidebar = () => {
 
   const handleOnClick = async ()=>{
     try{
-      const res = await axios.post('http://localhost:5173/users/logout', {withCredentials: true});
+      const res = await axios.post('https://w3villa-task-manager-web-app-x945.vercel.app/users/logout', {withCredentials: true});
       console.log(res);
       alert("You Logged Out Successfully!");
       navigate('/');

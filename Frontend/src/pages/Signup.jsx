@@ -14,7 +14,7 @@ const Signup = () => {
     let data = { username, email, password };
 
     try {
-      const res = await axios.post('http://localhost:5050/users/register', data, {withCredentials: true});
+      const res = await axios.post('https://w3villa-task-manager-web-app-x945.vercel.app/users/register', data, {withCredentials: true});
       alert('Registration Success');
       navigate('/dashboard');
       console.log(res.data);

@@ -31,7 +31,7 @@ const Dashboard = () => {
   useEffect(() => {
     const userInfo = async () => {
       try {
-        const res = await axios.get("http://localhost:5050/users/user-info", { withCredentials: true });
+        const res = await axios.get("https://w3villa-task-manager-web-app-x945.vercel.app/users/user-info", { withCredentials: true });
 
         console.log(res);
         setUsername(res.data.username);
@@ -50,7 +50,7 @@ const Dashboard = () => {
 
   const getTasks = async () => {
     try {
-      const res = await axios.get("http://localhost:5050/users/get-tasks", { withCredentials: true });
+      const res = await axios.get("https://w3villa-task-manager-web-app-x945.vercel.app/users/get-tasks", { withCredentials: true });
       setTasks(res.data.tasks); 
     } catch (error) {
       console.error("Error fetching tasks:", error);

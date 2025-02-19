@@ -42,7 +42,7 @@ const TaskCard = ({ task }) => {
   
     try {
       const updatedTask = await axios.post(
-        "http://localhost:5050/users/update-task",
+        "https://w3villa-task-manager-web-app-x945.vercel.app/users/update-task",
         editedTask, 
         { withCredentials: true }
       );
@@ -58,7 +58,7 @@ const TaskCard = ({ task }) => {
 
   const handleOnDelete = async () => {
     try {
-      const deletedTask = await axios.post('http://localhost:5050/users/delete-task', task, {withCredentials: true});
+      const deletedTask = await axios.post('https://w3villa-task-manager-web-app-x945.vercel.app/users/delete-task', task, {withCredentials: true});
   
       console.log("deleted Task", deletedTask);
       alert("Task Deleted Successfully!");
