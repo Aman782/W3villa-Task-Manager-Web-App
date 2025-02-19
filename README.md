@@ -34,7 +34,7 @@ Ensure you have the following installed:
 
 ### **Clone the Repository**
 ```sh
-$ git clone https://github.com/your-github-username/task-manager-app.git
+$ git clone https://github.com/Aman782/W3villa-Task-Manager-Web-App/
 $ cd task-manager-app
 ```
 
