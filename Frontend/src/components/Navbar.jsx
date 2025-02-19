@@ -1,15 +1,16 @@
-import { AppBar, Toolbar, Typography, Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import React from "react";
 
 const Navbar = () => {
   return (
-    <AppBar position="static" sx={{ bgcolor: "#1976d2" }}>
-      <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Task Manager
-        </Typography>
-        <Button color="inherit">Logout</Button>
-      </Toolbar>
-    </AppBar>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div className="container-fluid">
+        <span className="navbar-brand">Task Manager</span>
+        <button className="btn btn-light">
+          <Link to="/logout" className="text-decoration-none text-dark">Logout</Link>
+        </button>
+      </div>
+    </nav>
   );
 };
 
