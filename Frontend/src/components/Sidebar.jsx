@@ -18,8 +18,6 @@ const Sidebar = () => {
   }
 
 
-
-
   return (
     <div  className="fontstyle" style={{ width: "250px", backgroundColor: "#1976D2", color: "white", minHeight: "100vh", padding: "20px" }}>
       <h5 className="text-center mb-3 fs-4 fw-bold">Task Manager</h5>

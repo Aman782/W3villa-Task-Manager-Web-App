@@ -7,29 +7,7 @@ import TaskForm from "./TaskForm";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Complete UI Design",
-      status: "In Progress",
-      description: "Finalize UI for the task manager",
-      due: "Feb 20",
-    },
-    {
-      id: 2,
-      title: "API Integration",
-      status: "Pending",
-      description: "Connect frontend with backend APIs",
-      due: "Feb 22",
-    },
-    {
-      id: 3,
-      title: "Testing & Deployment",
-      status: "Completed",
-      description: "Test all features and deploy",
-      due: "Feb 25",
-    },
-  ]);
+  const [tasks, setTasks] = useState([]); 
 
   // Dark mode state
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -43,15 +21,12 @@ const Dashboard = () => {
   // Toggle theme function
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
-    if (!isDarkMode) {
-      document.body.classList.add("bg-dark", "text-light");
-    } else {
-      document.body.classList.remove("bg-dark", "text-light");
-    }
+    document.body.classList.toggle("bg-dark");
+    document.body.classList.toggle("text-light");
   };
 
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     const userInfo = async () => {
@@ -60,16 +35,27 @@ const Dashboard = () => {
 
         console.log(res);
         setUsername(res.data.username);
+
+        // Fetching tasks after getting user info
+        getTasks();
       } catch (e) {
         console.log(e);
-        alert("You are not loggedIn!");
+        alert("You are not logged in!");
         navigate("/login");
       }
     };
-  
+
     userInfo();
   }, []);
-  
+
+  const getTasks = async () => {
+    try {
+      const res = await axios.get("http://localhost:5050/users/get-tasks", { withCredentials: true });
+      setTasks(res.data.tasks); 
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  };
 
   return (
     <div className={`d-flex min-vh-100 ${isDarkMode ? "bg-dark text-light" : "bg-light text-dark"}`}>
@@ -108,11 +94,15 @@ const Dashboard = () => {
 
         {/* Task List */}
         <div className="row g-3">
-          {tasks.map((task) => (
-            <div className="col-12 col-sm-6 col-md-4" key={task.id}>
-              <TaskCard task={task} />
-            </div>
-          ))}
+          {tasks.length > 0 ? (
+            tasks.map((task) => (
+              <div className="col-12 col-sm-6 col-md-4" key={task._id}>
+                <TaskCard task={task} />
+              </div>
+            ))
+          ) : (
+            <p>No tasks available.</p>
+          )}
         </div>
       </div>
 

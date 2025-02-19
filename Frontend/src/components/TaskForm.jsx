@@ -1,47 +1,104 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
+import axios from "axios";
 
 const TaskForm = ({ open, handleClose }) => {
+  const [user, setUser] = useState(null);
   const [task, setTask] = useState({
     title: "",
     description: "",
-    priority: "low"
+    priority: "low",
+    dueDate: "",
+    createdBy: null, 
   });
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await axios.get("http://localhost:5050/users/user-info", {
+          withCredentials: true,
+        });
+
+        console.log("Fetched User:", res.data);
+        setUser(res.data);
+
+        setTask((prevTask) => ({
+          ...prevTask,
+          createdBy: res.data._id,
+        }));
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      }
+    };
+
+    getUser();
+  }, []);   
 
   const handleChange = (e) => {
     setTask({ ...task, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate inputs
-    if (!task.title || !task.description) {
-      alert("Title and Description are required!");
+    if (!task.title || !task.description || !task.dueDate || !task.createdBy) {
+      alert("All fields, including createdBy, are required!");
       return;
     }
 
-    // You can add your task creation logic here, such as sending the data to an API
     console.log("Task Created:", task);
 
-    // Reset form
-    setTask({ title: "", description: "", priority: "low" });
-    handleClose(); // Close the modal after submitting the form
+    try {
+      const res = await axios.post(
+        "http://localhost:5050/users/new-task",
+        task,
+        { withCredentials: true }
+      );
+
+      console.log("Task Successfully Created:", res.data);
+
+      // Reset form
+      setTask({
+        title: "",
+        description: "",
+        priority: "low",
+        dueDate: "",
+        createdBy: user ? user._id : null,
+      });
+
+      handleClose();
+    } catch (error) {
+      console.error("Error creating task:", error);
+    }
   };
 
   return (
-    <div className={`modal fade ${open ? "show" : ""}`} style={{ display: open ? "block" : "none" }} tabIndex="-1" aria-labelledby="taskFormLabel" aria-hidden="true">
+    <div
+      className={`modal fade ${open ? "show" : ""}`}
+      style={{ display: open ? "block" : "none" }}
+      tabIndex="-1"
+      aria-labelledby="taskFormLabel"
+      aria-hidden="true"
+    >
       <div className="modal-dialog modal-lg">
         <div className="modal-content border-0 rounded-3 shadow-lg">
           <div className="modal-header border-bottom-0">
-            <h5 className="modal-title text-primary" id="taskFormLabel">Add New Task</h5>
-            <button type="button" className="btn-close" onClick={handleClose} aria-label="Close"></button>
+            <h5 className="modal-title text-primary" id="taskFormLabel">
+              Add New Task
+            </h5>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={handleClose}
+              aria-label="Close"
+            ></button>
           </div>
           <div className="modal-body py-4">
-            {/* Form fields */}
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="title" className="form-label text-muted">Task Title</label>
+                <label htmlFor="title" className="form-label text-muted">
+                  Task Title
+                </label>
                 <input
                   type="text"
                   className="form-control form-control-lg shadow-sm"
@@ -55,7 +112,9 @@ const TaskForm = ({ open, handleClose }) => {
               </div>
 
               <div className="mb-3">
-                <label htmlFor="description" className="form-label text-muted">Task Description</label>
+                <label htmlFor="description" className="form-label text-muted">
+                  Task Description
+                </label>
                 <textarea
                   className="form-control form-control-lg shadow-sm"
                   id="description"
@@ -69,7 +128,9 @@ const TaskForm = ({ open, handleClose }) => {
               </div>
 
               <div className="mb-3">
-                <label htmlFor="priority" className="form-label text-muted">Priority</label>
+                <label htmlFor="priority" className="form-label text-muted">
+                  Priority
+                </label>
                 <select
                   className="form-select form-select-lg shadow-sm"
                   id="priority"
@@ -83,9 +144,32 @@ const TaskForm = ({ open, handleClose }) => {
                 </select>
               </div>
 
+              <div className="mb-3">
+                <label htmlFor="dueDate" className="form-label text-muted">
+                  Due Date
+                </label>
+                <input
+                  type="date"
+                  className="form-control form-control-lg shadow-sm"
+                  id="dueDate"
+                  name="dueDate"
+                  value={task.dueDate}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
               <div className="modal-footer border-top-0 d-flex justify-content-between">
-                <button type="button" className="btn btn-outline-secondary" onClick={handleClose}>Close</button>
-                <button type="submit" className="btn btn-primary px-4 py-2">Add Task</button>
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  onClick={handleClose}
+                >
+                  Close
+                </button>
+                <button type="submit" className="btn btn-primary px-4 py-2">
+                  Add Task
+                </button>
               </div>
             </form>
           </div>
